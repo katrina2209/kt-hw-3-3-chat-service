@@ -54,11 +54,16 @@ class ChatServiceTest {
     @Test
     fun getUnreadChatsCount() {
         val service = ChatService()
-        service.createMessage(45, 23, "msg 1")
+        val msg1 = service.createMessage(45, 23, "msg 1")
         service.createMessage(23, 45, "msg 2")
         service.createMessage(45, 22, "msg 3")
         service.createMessage(44, 22, "msg 4")
         service.createMessage(23, 22, "msg 5")
+        val msg6 = service.createMessage(45, 2, "msg 6")
+        val msg7 = service.createMessage(45, 222, "msg 7")
+        service.readMessage(msg1)
+        service.readMessage(msg6)
+        service.readMessage(msg7)
         assertEquals(service.getUnreadChatsCount(45), 2)
 
     }
@@ -71,8 +76,10 @@ class ChatServiceTest {
         service.createMessage(45, 22, "msg 3")
         service.createMessage(44, 22, "msg 4")
         service.createMessage(23, 22, "msg 5")
+        service.createMessage(45, 23, "msg 6")
+        service.createMessage(45, 23, "msg 7")
 
-        assertEquals(service.getMessagesByChatId(1).size, 2)
+        assertEquals(service.getMessagesByChatId(1).size, 4)
     }
 
     @Test fun getMessagesByLastMessageId (){
